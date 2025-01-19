@@ -1,8 +1,11 @@
 FROM golang:1.23
 
-WORKDIR /usr/src/app
-COPY . .
+WORKDIR /usr/local/app
+COPY go.mod ./
+COPY ./internal ./internal
 RUN go mod download
 
-RUN go build -v -o /usr/local/bin/app ./...
-CMD ["app"]
+COPY . .
+RUN go build -v -o app .
+
+CMD ["./app"]
