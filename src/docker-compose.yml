@@ -1,0 +1,15 @@
+services:
+  postgres:
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=notes_password
+      - POSTGRES_DB=notes_database
+  notesapi:
+    build:
+      context: ./web-api
+      dockerfile: Dockerfile
+  
