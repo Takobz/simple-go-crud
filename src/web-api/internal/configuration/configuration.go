@@ -7,18 +7,6 @@ import (
 	"path/filepath"
 )
 
-type ConfigurationOptions struct {
-	Postgres DatabaseOptions `json:"postgres"`
-}
-
-type DatabaseOptions struct {
-	Database string `json:"database"`
-	Host     string `json:"host"`
-	Port     string `json:"port"`
-	User     string `json:"user"`
-	Password string `json:"password"`
-}
-
 func GetConfiguration() ConfigurationOptions {
 	configurationOptions := ConfigurationOptions{}
 	configuration := ReadConfigurationFileFromHost()

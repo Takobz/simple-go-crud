@@ -6,8 +6,8 @@ services:
     ports:
       - '5432:5432'
     environment:
-      - POSTGRES_PASSWORD=notes_password
-      - POSTGRES_DB=notes_database
+      - POSTGRES_PASSWORD=notes_password #these are hardcoded for the purpose of testing
+      - POSTGRES_DB=notes_database 
   notesapi:
     build:
       context: ./web-api
