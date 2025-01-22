@@ -9,7 +9,7 @@ import (
 
 func GetConfiguration() ConfigurationOptions {
 	configurationOptions := ConfigurationOptions{}
-	configuration := ReadConfigurationFileFromHost()
+	configuration := readConfigurationFileFromHost()
 	err := json.Unmarshal(configuration, &configurationOptions)
 	if err != nil {
 		panic(err)
@@ -18,7 +18,21 @@ func GetConfiguration() ConfigurationOptions {
 	return configurationOptions
 }
 
-func ReadConfigurationFileFromHost() []byte {
+func GetPostgresConnectionString() string {
+	configOptions := GetConfiguration()
+
+	//produces a string like "postgres://user:password@host/database?sslmode=disable"
+	return "postgres://" +
+		configOptions.Postgres.User + ":" +
+		configOptions.Postgres.Password + "@" +
+		configOptions.Postgres.Host + "/" +
+		configOptions.Postgres.Database + "?sslmode=disable"
+}
+
+/*
+write about how method can be made private by making them lowercase.
+*/
+func readConfigurationFileFromHost() []byte {
 	//path relative to caller i.e main.go
 	absPath, err := filepath.Abs("./appsettings.json")
 	if err != nil {

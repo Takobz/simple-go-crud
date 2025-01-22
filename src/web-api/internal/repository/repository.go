@@ -1,12 +1,60 @@
 package repository
 
-// import (
-// 	"simple-go-crud/configuration"
-// )
+import (
+	"context"
+	"simple-go-crud/configuration"
 
-// func GetAllNotes() {
-// 	configOptions := configuration.GetConfiguration()
-// 	//connectionString := "host=" + configOptions.Database.Host + " port=" + configOptions.Database.Port + " user=" + configOptions.Database.User + " password=" + configOptions.Database.Password + " dbname=" + configOptions.Database.Name + " sslmode=disable"
-// }
+	"github.com/jackc/pgx/v5"
+)
 
-//TODO: Figure out how to reference configuration.
+/*
+Things to read about:
+- context package.
+*/
+var connectionString = configuration.GetPostgresConnectionString()
+
+func CreateANote(note Note) Note {
+	conn, err := pgx.Connect(context.Background(), connectionString)
+	if err != nil {
+		panic(err)
+	}
+	defer conn.Close(context.Background())
+
+	_, err = conn.Exec(
+		context.Background(),
+		"INSERT INTO notes (title, content, createdAt) VALUES (?, ?, ?)",
+		note.Title,
+		note.Content,
+		note.CreatedAt)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return note
+}
+
+func GetAllNotes() []Note {
+	conn, err := pgx.Connect(context.Background(), connectionString)
+	if err != nil {
+		panic(err)
+	}
+	defer conn.Close(context.Background())
+
+	var notes []Note
+	rows, err := conn.Query(context.Background(), "SELECT * FROM notes")
+	if err != nil {
+		panic(err)
+	}
+
+	for rows.Next() {
+		var note Note
+		err = rows.Scan(&note.Id, &note.Title, &note.Content, &note.CreatedAt)
+		if err != nil {
+			panic(err)
+		}
+		notes = append(notes, note)
+	}
+
+	return notes
+}
