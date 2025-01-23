@@ -20,13 +20,14 @@ func CreateANote(note Note) Note {
 	}
 	defer conn.Close(context.Background())
 
-	_, err = conn.Exec(
-		context.Background(),
-		"INSERT INTO notes (title, content, createdAt) VALUES (?, ?, ?)",
-		note.Title,
-		note.Content,
-		note.CreatedAt)
+	query := "INSERT INTO notes (title, content, createdAt) VALUES (@title, @content, @createdAt)"
+	arguments := pgx.NamedArgs{
+		"title":     note.Title,
+		"content":   note.Content,
+		"createdAt": note.CreatedAt,
+	}
 
+	_, err = conn.Exec(context.Background(), query, arguments)
 	if err != nil {
 		panic(err)
 	}
