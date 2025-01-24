@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"simple-go-crud/configuration"
+	"time"
 
 	"github.com/jackc/pgx/v5"
 )
@@ -20,7 +21,7 @@ func CreateANote(note Note) Note {
 	}
 	defer conn.Close(context.Background())
 
-	query := "INSERT INTO notes (title, content, createdAt) VALUES (@title, @content, @createdAt)"
+	query := "INSERT INTO notes (title, content, created_at) VALUES (@title, @content, @createdAt)"
 	arguments := pgx.NamedArgs{
 		"title":     note.Title,
 		"content":   note.Content,
@@ -50,10 +51,12 @@ func GetAllNotes() []Note {
 
 	for rows.Next() {
 		var note Note
-		err = rows.Scan(&note.Id, &note.Title, &note.Content, &note.CreatedAt)
+		var createdAt time.Time
+		err = rows.Scan(&note.Id, &note.Title, &note.Content, &createdAt)
 		if err != nil {
 			panic(err)
 		}
+		note.CreatedAt = createdAt.Format("2006-01-02 15:04:05")
 		notes = append(notes, note)
 	}
 

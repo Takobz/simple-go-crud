@@ -13,6 +13,8 @@ The Web API exposes cability to act on notes. Notes are entities that track acti
 This section covers what devs need to do to get started.
 
 ## Usual Tools:
+
+### Running a single container within a docker compose file (Using Postgres as example)
 Running the postgres image only from the docker compose:  
 ```shell
 sudo docker-compose -f docker-compose.yml up  --build 'postgres'
@@ -37,4 +39,19 @@ psql -U postgres # connect to postgres cli as default user postgres.
 postgres=# 
 
 # Then you can do commands like /l , /dt or etc.
+```
+
+### Deleting all images and container without prune (Unix)
+To delete all container without needed to do a `sudo docker system prune` you can run:
+```shell
+# docker rm => is the remove command to remove containers by container id
+# docker ps -aq => this will list all container ids of all container you have created before.
+sudo docker rm $(sudo docker ps -aq)
+```
+
+To delete all images with a similar command:  
+```shell
+# docker rmi => remove image is a command to remove an image by image id.
+# docker images -aq => list all image ids of all images ever built or pulled in the host.
+sudo docker rmi $(sudo docker images -aq)
 ```
