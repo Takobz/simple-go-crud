@@ -3,7 +3,6 @@ package repository
 import (
 	"context"
 	"simple-go-crud/configuration"
-	"time"
 
 	"github.com/jackc/pgx/v5"
 )
@@ -51,12 +50,10 @@ func GetAllNotes() []Note {
 
 	for rows.Next() {
 		var note Note
-		var createdAt time.Time
-		err = rows.Scan(&note.Id, &note.Title, &note.Content, &createdAt)
+		err = rows.Scan(&note.Id, &note.Title, &note.Content, &note.CreatedAt)
 		if err != nil {
 			panic(err)
 		}
-		note.CreatedAt = createdAt.Format("2006-01-02 15:04:05")
 		notes = append(notes, note)
 	}
 
