@@ -1,10 +1,12 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"simple-go-crud/dtos"
-	"github.com/gin-gonic/gin"
 	"simple-go-crud/mappers"
+
+	"github.com/gin-gonic/gin"
 )
 
 func CreateNote(ginContext *gin.Context) {
@@ -17,9 +19,10 @@ func CreateNote(ginContext *gin.Context) {
 		return
 	}
 
-	note := mappers.CreateNoteRequestToNoteDto(createNoteRequest)
+	note := mappers.CreateNoteRequestToNote(createNoteRequest)
+	output := fmt.Sprintf("%s", note)
 	ginContext.JSON(http.StatusOK, gin.H{
-		"message": "Create a note",
+		"message": output,
 	})
 }
 

@@ -7,7 +7,6 @@ replace simple-go-crud/configuration => ./internal/configuration
 require (
 	github.com/gin-gonic/gin v1.10.0
 	simple-go-crud/handlers v0.0.0-00010101000000-000000000000
-	simple-go-crud/repository v0.0.0-00010101000000-000000000000
 )
 
 require (
@@ -21,12 +20,9 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.20.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
-	github.com/jackc/pgpassfile v1.0.0 // indirect
-	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/pgx/v5 v5.7.2 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.7 // indirect
-	github.com/kr/text v0.2.0 // indirect
+	github.com/kr/pretty v0.3.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
@@ -41,9 +37,11 @@ require (
 	golang.org/x/sys v0.28.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	google.golang.org/protobuf v1.34.1 // indirect
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	simple-go-crud/configuration v0.0.0-00010101000000-000000000000 // indirect
 	simple-go-crud/dtos v0.0.0-00010101000000-000000000000 // indirect
+	simple-go-crud/mappers v0.0.0-00010101000000-000000000000 // indirect
+	simple-go-crud/models v0.0.0-00010101000000-000000000000 // indirect
 )
 
 replace simple-go-crud/repository => ./internal/repository
@@ -51,3 +49,7 @@ replace simple-go-crud/repository => ./internal/repository
 replace simple-go-crud/handlers => ./internal/handlers
 
 replace simple-go-crud/dtos => ./internal/dtos
+
+replace simple-go-crud/mappers => ./internal/mappers
+
+replace simple-go-crud/models => ./internal/models
