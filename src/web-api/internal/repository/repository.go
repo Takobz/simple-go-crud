@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 	"simple-go-crud/configuration"
-
+	"simple-go-crud/models"
 	"github.com/jackc/pgx/v5"
 )
 
@@ -13,7 +13,7 @@ Things to read about:
 */
 var connectionString = configuration.GetPostgresConnectionString()
 
-func CreateANote(note Note) Note {
+func CreateANote(note models.Note) models.Note {
 	conn, err := pgx.Connect(context.Background(), connectionString)
 	if err != nil {
 		panic(err)
@@ -35,21 +35,21 @@ func CreateANote(note Note) Note {
 	return note
 }
 
-func GetAllNotes() []Note {
+func GetAllNotes() []models.Note {
 	conn, err := pgx.Connect(context.Background(), connectionString)
 	if err != nil {
 		panic(err)
 	}
 	defer conn.Close(context.Background())
 
-	var notes []Note
+	var notes []models.Note
 	rows, err := conn.Query(context.Background(), "SELECT * FROM notes")
 	if err != nil {
 		panic(err)
 	}
 
 	for rows.Next() {
-		var note Note
+		var note models.Note
 		err = rows.Scan(&note.Id, &note.Title, &note.Content, &note.CreatedAt)
 		if err != nil {
 			panic(err)

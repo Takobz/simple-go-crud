@@ -7,6 +7,7 @@ replace simple-go-crud/configuration => ../configuration
 require (
 	github.com/jackc/pgx/v5 v5.7.2
 	simple-go-crud/configuration v0.0.0-00010101000000-000000000000
+	simple-go-crud/models v0.0.0-00010101000000-000000000000
 )
 
 require (
@@ -15,3 +16,5 @@ require (
 	golang.org/x/crypto v0.31.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 )
+
+replace simple-go-crud/models => ../models
