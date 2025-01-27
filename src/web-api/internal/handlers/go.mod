@@ -37,3 +37,7 @@ require (
 )
 
 replace simple-go-crud/dtos => ../dtos
+
+replace simple-go-crud/models => ../models
+
+replace simple-go-crud/mappers => ../mappers
