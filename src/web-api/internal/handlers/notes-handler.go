@@ -1,10 +1,12 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"simple-go-crud/dtos"
+	"simple-go-crud/helpers"
 	"simple-go-crud/mappers"
+	"simple-go-crud/models"
+	"simple-go-crud/repository"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,21 +15,18 @@ func CreateNote(ginContext *gin.Context) {
 	var createNoteRequest dtos.CreateNoteRequest
 	err := ginContext.BindJSON(&createNoteRequest)
 	if err != nil {
-		ginContext.JSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid request",
-		})
+		badResponse := helpers.CreateErrorResponse(models.CREATE_NOTE_ERROR)
+		ginContext.JSON(http.StatusBadRequest, badResponse)
 		return
 	}
 
+	//TODO: return dto not db model
 	note := mappers.CreateNoteRequestToNote(createNoteRequest)
-	output := fmt.Sprintf("%s", note)
-	ginContext.JSON(http.StatusOK, gin.H{
-		"message": output,
-	})
+	createdNote := repository.CreateANote(note)
+	ginContext.JSON(http.StatusOK, createdNote)
 }
 
 func GetAllNotes(ginContext *gin.Context) {
-	ginContext.JSON(http.StatusOK, gin.H{
-		"message": "Get all notes",
-	})
+	notes := repository.GetAllNotes()
+	ginContext.JSON(http.StatusOK, notes)
 }

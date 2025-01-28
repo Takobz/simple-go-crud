@@ -4,6 +4,7 @@ import (
 	"context"
 	"simple-go-crud/configuration"
 	"simple-go-crud/models"
+
 	"github.com/jackc/pgx/v5"
 )
 
@@ -20,14 +21,13 @@ func CreateANote(note models.Note) models.Note {
 	}
 	defer conn.Close(context.Background())
 
-	query := "INSERT INTO notes (title, content, created_at) VALUES (@title, @content, @createdAt)"
 	arguments := pgx.NamedArgs{
 		"title":     note.Title,
 		"content":   note.Content,
 		"createdAt": note.CreatedAt,
 	}
 
-	_, err = conn.Exec(context.Background(), query, arguments)
+	err = conn.QueryRow(context.Background(), INSERT_NOTE_QUERY_RETURNING_ID, arguments).Scan(&note.Id)
 	if err != nil {
 		panic(err)
 	}
@@ -43,7 +43,7 @@ func GetAllNotes() []models.Note {
 	defer conn.Close(context.Background())
 
 	var notes []models.Note
-	rows, err := conn.Query(context.Background(), "SELECT * FROM notes")
+	rows, err := conn.Query(context.Background(), SELECT_ALL_NOTES_QUERY)
 	if err != nil {
 		panic(err)
 	}

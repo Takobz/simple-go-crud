@@ -1,6 +1,6 @@
 package dtos
 
-type CreateNoteRequest struct {
+type CreateNoteResponse struct {
 	Id        string `json:"id"`
 	Title     string `json:"title"`
 	Content   string `json:"content"`

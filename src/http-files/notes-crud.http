@@ -1,0 +1,15 @@
+# create note entity
+#@name CreateNote
+POST http://localhost:8080/note
+Content-Type: application/json
+
+{
+  "title": "Note - {{$guid}}",
+  "content": "The content - {{$guid}}"
+}
+
+###
+
+# get all notes
+#@name GetNotes
+GET http://localhost:8080/note
