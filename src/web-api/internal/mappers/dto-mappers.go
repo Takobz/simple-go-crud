@@ -22,3 +22,12 @@ func NoteToCreateNoteResponse(note models.Note) dtos.CreateNoteResponse {
 		CreatedAt: note.CreatedAt.Format(time.RFC3339),
 	}
 }
+
+func NoteToGetNoteResponse(note models.Note) dtos.GetNoteResponse {
+	return dtos.GetNoteResponse{
+		Id:        note.Id,
+		Title:     note.Title,
+		Content:   note.Content,
+		CreatedAt: note.CreatedAt.Format(time.RFC3339),
+	}
+}

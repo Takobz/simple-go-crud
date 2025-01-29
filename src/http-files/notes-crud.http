@@ -1,5 +1,5 @@
 # create note entity
-#@name CreateNote
+# @name CreateNote
 POST http://localhost:8080/note
 Content-Type: application/json
 
@@ -10,6 +10,14 @@ Content-Type: application/json
 
 ###
 
+@TEMP_noteId = {{CreateNote.response.body.$.id}}
+
+# get note by id
+# @name GetNoteById
+GET http://localhost:8080/note?noteId={{TEMP_noteId}}
+
+###
+
 # get all notes
-#@name GetNotes
-GET http://localhost:8080/note
+# @name GetNotes
+GET http://localhost:8080/notes

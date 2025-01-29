@@ -14,6 +14,7 @@ Things to read about:
 */
 var connectionString = configuration.GetPostgresConnectionString()
 
+// TODO: Add interface for repository.
 func CreateANote(note models.Note) models.Note {
 	conn, err := pgx.Connect(context.Background(), connectionString)
 	if err != nil {
@@ -32,6 +33,21 @@ func CreateANote(note models.Note) models.Note {
 		panic(err)
 	}
 
+	return note
+}
+
+func GetNoteById(noteId string) models.Note {
+	conn, err := pgx.Connect(context.Background(), connectionString)
+	if err != nil {
+		panic(err)
+	}
+	defer conn.Close(context.Background())
+
+	var note models.Note
+	err = conn.QueryRow(context.Background(), SELECT_NOTE_BY_ID_QUERY, noteId).Scan(&note.Id, &note.Title, &note.Content, &note.CreatedAt)
+	if err != nil {
+		panic(err)
+	}
 	return note
 }
 
