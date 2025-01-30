@@ -75,3 +75,8 @@ func GetAllNotes() []models.Note {
 
 	return notes
 }
+
+func UpdateNote(noteId string) models.Note {
+	//TODO: Implement this function.
+	return models.Note{}
+}
